@@ -10,7 +10,6 @@ const EditorCanvas = dynamic(
 );
 
 function makeDefaultProfile(): ProfileData {
-  // Valori safe (senza dipendere da API esterne). Puoi sostituirli con fetch/supabase quando vuoi.
   return {
     player_name: "Player Name",
     player_code: "0000-0000",
@@ -30,7 +29,10 @@ function makeDefaultProfile(): ProfileData {
 }
 
 export default function EditClient({ templateId }: { templateId: string }) {
-  const defaultProfile = makeDefaultProfile();
+  const value = makeDefaultProfile();
 
-  return <EditorCanvas templateId={templateId} defaultProfile={defaultProfile} />;
+  // Local fallback: templates are served from /public/templates/<templateId>.png
+  const templateSrc = `/templates/${encodeURIComponent(templateId)}.png`;
+
+  return <EditorCanvas templateSrc={templateSrc} value={value} />;
 }
