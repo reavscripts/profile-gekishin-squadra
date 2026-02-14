@@ -52,44 +52,53 @@ export function ProfileForm({
         </div>
 
         {/* Role ranks */}
-        <div className="grid" style={{ gridTemplateColumns: "1fr 1fr 1fr", gap: 12 }}>
-          <div>
-            <div className="label">Damage rank</div>
-            <select className="select" value={value.damage_rank} onChange={(e) => set("damage_rank", e.target.value as any)}>
-              {TIER_OPTIONS.map((t) => (
-                <option key={t} value={t}>
-                  {t}
-                </option>
-              ))}
-            </select>
-          </div>
+		<div className="rankRow3">
+		  <div className="rankField">
+			<div className="label">Damage</div>
+			<select
+			  className="select"
+			  value={value.damage_rank}
+			  onChange={(e) => set("damage_rank", e.target.value as any)}
+			>
+			  {TIER_OPTIONS.map((t) => (
+				<option key={t} value={t}>
+				  {t}
+				</option>
+			  ))}
+			</select>
+		  </div>
 
-          <div>
-            <div className="label">Tank rank</div>
-            <select className="select" value={value.tank_rank} onChange={(e) => set("tank_rank", e.target.value as any)}>
-              {TIER_OPTIONS.map((t) => (
-                <option key={t} value={t}>
-                  {t}
-                </option>
-              ))}
-            </select>
-          </div>
+		  <div className="rankField">
+			<div className="label">Tank</div>
+			<select
+			  className="select"
+			  value={value.tank_rank}
+			  onChange={(e) => set("tank_rank", e.target.value as any)}
+			>
+			  {TIER_OPTIONS.map((t) => (
+				<option key={t} value={t}>
+				  {t}
+				</option>
+			  ))}
+			</select>
+		  </div>
 
-          <div>
-            <div className="label">Technical rank</div>
-            <select
-              className="select"
-              value={value.technical_rank}
-              onChange={(e) => set("technical_rank", e.target.value as any)}
-            >
-              {TIER_OPTIONS.map((t) => (
-                <option key={t} value={t}>
-                  {t}
-                </option>
-              ))}
-            </select>
-          </div>
-        </div>
+		  <div className="rankField">
+			<div className="label">Technical</div>
+			<select
+			  className="select"
+			  value={value.technical_rank}
+			  onChange={(e) => set("technical_rank", e.target.value as any)}
+			>
+			  {TIER_OPTIONS.map((t) => (
+				<option key={t} value={t}>
+				  {t}
+				</option>
+			  ))}
+			</select>
+		  </div>
+		</div>
+
 
         {/* Region + Font */}
         <div className="grid" style={{ gridTemplateColumns: "1fr 1fr", gap: 12 }}>
