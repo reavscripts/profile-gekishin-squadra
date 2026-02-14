@@ -33,6 +33,7 @@ export default function EditClient({ templateId }: { templateId: string }) {
 
   // Local fallback: templates are served from /public/templates/<templateId>.png
   const templateSrc = `/templates/${encodeURIComponent(templateId)}.png`;
+ 
 
   return <EditorCanvas templateSrc={templateSrc} value={value} />;
 }
