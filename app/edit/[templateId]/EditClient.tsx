@@ -4,9 +4,10 @@ import { useCallback, useMemo, useState } from "react";
 import dynamic from "next/dynamic";
 import type { ProfileData } from "@/lib/templateConfig";
 
-const EditorCanvas = dynamic(() => import("@/components/EditorCanvas").then((m) => m.default), {
-  ssr: false
-});
+const EditorCanvas = dynamic(
+  () => import("@/components/EditorCanvas").then((m) => m.default),
+  { ssr: false }
+);
 
 
 function makeDefaultProfile(templateId: string): ProfileData {
