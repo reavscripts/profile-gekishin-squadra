@@ -2,7 +2,6 @@
 
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { Stage, Layer, Image as KImage, Text as KText, Rect, Group } from "react-konva";
-import useImage from "@/lib/useImage";
 import { layout, ProfileData, Role, STYLE_PRESETS, TextBox } from "@/lib/templateConfig";
 
 type BoxState = TextBox & { id: string };
@@ -134,7 +133,31 @@ export function EditorCanvas({
   onReady?: (api: { exportPng: (pixelRatio?: number) => Promise<Blob> }) => void;
 }) {
   const stageRef = useRef<any>(null);
-  const [bg] = useImage(templateSrc);
+    const [bg, setBg] = useState<HTMLImageElement | null>(null);
+
+  useEffect(() => {
+    let cancelled = false;
+    if (!templateSrc) {
+      setBg(null);
+      return;
+    }
+
+    const img = new Image();
+    // Avoid forcing crossOrigin here; it can break loading on servers without CORS.
+    // Same-origin assets will export fine.
+    img.decoding = "async";
+    img.src = templateSrc;
+    img.onload = () => {
+      if (!cancelled) setBg(img);
+    };
+    img.onerror = () => {
+      if (!cancelled) setBg(null);
+    };
+
+    return () => {
+      cancelled = true;
+    };
+  }, [templateSrc]);
 
   const [boxes] = useState<BoxState[]>(
     () => layout.boxes.map((b, i) => ({ ...b, id: `${b.key}-${i}` }))
@@ -222,17 +245,20 @@ export function EditorCanvas({
 		  style={{
 			width: "100%",
 			maxWidth: "100%",
-			height: "calc(100vh - 180px)",
-			maxHeight: "calc(100vh - 180px)",
+			aspectRatio: `${canvasW} / ${canvasH}`,
+			minHeight: 240,
+			maxHeight: "calc(100vh - 220px)",
 			overflow: "hidden",
 			display: "flex",
 			alignItems: "center",
 			justifyContent: "center"
 		  }}
 		>
-        <Stage ref={stageRef} width={stageW} height={stageH} style={{ display: "block" }}>
+        <Stage ref={stageRef} width={stageW} height={stageH} style={{ display: "block", width: "100%" }}>
           <Layer>
             <Group scaleX={scale} scaleY={scale}>
+              {/* Background (helps see the canvas even while template loads) */}
+              <Rect x={0} y={0} width={canvasW} height={canvasH} fill="#0b1020" listening={false} />
             {bg && <KImage image={bg} x={0} y={0} width={canvasW} height={canvasH} listening={false} />}
 
             <Group listening={false}>
