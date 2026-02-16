@@ -1,10 +1,5 @@
-.header {
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  gap: 16px;
-  margin: 18px 0 14px;
-}
+
+.header { overflow: visible; }
 
 .grid {
   display: grid;
@@ -86,4 +81,278 @@
     transform: scale(1.01);
     transition: transform 140ms ease;
   }
+}
+
+.wallpaper {
+  min-height: 100vh;
+  background: #070a12; /* fallback pulito */
+}
+
+/* Desktop: wallpaper fisso */
+@media (min-width: 1024px) {
+  .wallpaper {
+    background-image: url("/images/dragonball-wallpaper.jpg");
+    background-size: cover;
+    background-position: center top;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    position: relative;
+  }
+
+  /* overlay per contrasto */
+  .wallpaper::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background: radial-gradient(ellipse at center, rgba(0,0,0,0.35), rgba(0,0,0,0.85));
+    pointer-events: none;
+    z-index: 0;
+  }
+
+	.content {
+	  position: relative;
+	  z-index: 1;
+
+	  padding-top: 64px;
+	  padding-bottom: 24px;
+
+	  /* pannello vetro premium */
+	  background: rgba(7, 10, 18, 0.72);
+	  backdrop-filter: blur(8px);
+	  border: 1px solid rgba(255, 255, 255, 0.06);
+
+	  /* importante: si unisce al footer sotto */
+	  border-bottom: none;
+	  border-radius: 18px 18px 0 0;
+	}
+
+}
+
+/* Mobile: niente wallpaper */
+@media (min-width: 1024px) {
+  .content {
+    background: rgba(7, 10, 18, 0.72);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 18px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .content {
+    background: rgba(7, 10, 18, 0.72);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255,255,255,0.06);
+
+    /* solo sopra: sotto ci pensa il footerPanel */
+    border-bottom: none;
+    border-radius: 18px 18px 0 0;
+  }
+}
+
+/* HERO HEADER */
+
+.heroTop {
+  text-align: center;
+  padding: 56px 16px 32px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+}
+
+/* LOGO */
+.logo {
+  width: min(520px, 90%);
+  height: auto;
+  filter: drop-shadow(0 8px 24px rgba(0, 0, 0, 0.6));
+  transition: transform 0.25s ease;
+}
+
+.logo:hover {
+  transform: scale(1.03);
+}
+
+/* TITLE */
+.title {
+  font-size: clamp(28px, 4vw, 44px);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: white;
+}
+
+/* SUBTITLE */
+.subtitle {
+  max-width: 640px;
+  font-size: clamp(15px, 2vw, 18px);
+  color: rgba(255, 255, 255, 0.75);
+  line-height: 1.6;
+}
+
+/* WRAPPER */
+.logoWrap {
+  position: relative;
+  display: inline-block;
+}
+
+/* GLOW ANIME */
+.logoGlow {
+  position: absolute;
+  inset: -20px;
+  z-index: -1;
+  border-radius: 40px;
+
+  background:
+    radial-gradient(circle at 30% 50%, rgba(0, 200, 255, 0.35), transparent 60%),
+    radial-gradient(circle at 70% 50%, rgba(255, 60, 120, 0.35), transparent 60%);
+
+  filter: blur(18px);
+  opacity: 0.8;
+
+  animation: auraPulse 3.5s ease-in-out infinite;
+}
+
+/* PULSAZIONE */
+@keyframes auraPulse {
+  0%, 100% {
+    transform: scale(0.98);
+    opacity: 0.7;
+  }
+  50% {
+    transform: scale(1.05);
+    opacity: 1;
+  }
+}
+
+@media (max-width: 768px) {
+  .logoGlow {
+    filter: blur(12px);
+    animation-duration: 4.5s;
+    opacity: 0.6;
+  }
+}
+
+.logoFx {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 35%;
+  height: auto;
+  transform: translate(-50%, -50%);
+  z-index: 0;
+  opacity: 0.55;
+  pointer-events: none;
+  animation: fxSpin 6s linear infinite, fxPulse 3.2s ease-in-out infinite;
+  filter: drop-shadow(0 10px 24px rgba(0,0,0,0.45));
+}
+
+@keyframes fxSpin {
+  from { transform: translate(-50%, -50%) rotate(0deg); }
+  to   { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+@keyframes fxPulse {
+  0%, 100% { opacity: 0.35; }
+  50%      { opacity: 0.65; }
+}
+
+.searchRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin: 12px 0 18px;
+}
+
+.searchWrap {
+  position: relative;
+  flex: 1;
+  max-width: none;
+}
+
+.searchInput {
+  width: 100%;
+  height: 44px;
+  padding: 0 44px 0 14px;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,0.10);
+  background: rgba(7,10,18,0.28);
+  backdrop-filter: blur(8px);
+  color: rgba(255,255,255,0.92);
+  outline: none;
+}
+
+.searchInput::placeholder {
+  color: rgba(255,255,255,0.45);
+}
+
+.searchInput:focus {
+  border-color: rgba(255,255,255,0.22);
+}
+
+.searchClear {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  height: 28px;
+  width: 28px;
+  border-radius: 10px;
+  border: 0;
+  background: rgba(255,255,255,0.08);
+  color: rgba(255,255,255,0.9);
+  cursor: pointer;
+}
+
+.searchMeta {
+  font-size: 13px;
+  color: rgba(255,255,255,0.55);
+  text-shadow: 0 2px 14px rgba(0,0,0,0.55);
+  white-space: nowrap;
+}
+
+.emptyState {
+  grid-column: 1 / -1;
+  padding: 18px 14px;
+  border: 1px dashed rgba(255,255,255,0.18);
+  border-radius: 14px;
+  color: rgba(255,255,255,0.7);
+  background: rgba(7,10,18,0.22);
+  text-align: center;
+}
+
+.emptyQuery {
+  color: rgba(255,255,255,0.92);
+}
+
+@media (max-width: 768px) {
+  .searchRow {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .searchWrap {
+    max-width: none;
+  }
+  .searchMeta {
+    text-align: right;
+  }
+}
+
+
+/* rende solo la zona cards/search più larga su desktop */
+.gridWide {
+  width: 100%;
+}
+
+@media (min-width: 1024px) {
+  .gridWide {
+    width: min(1400px, 100%);
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+.fullBleed {
+  width: 100%;
+  padding: 0 16px;
 }

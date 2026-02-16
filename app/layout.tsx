@@ -2,13 +2,17 @@ import "./globals.css";
 
 export const viewport = {
   width: "device-width",
-  initialScale: 1
+  initialScale: 1,
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body className="layoutBody">
+        <div className="layoutPage">
+          <main className="layoutContent">{children}</main>
+        </div>
+      </body>
     </html>
   );
 }
